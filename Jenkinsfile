@@ -22,20 +22,24 @@ pipeline {
         stage('Add index.html') {
             steps {
                 script {
+                    // Ensure you're on the main branch to avoid detached HEAD state
+                    sh 'git checkout main'
+
                     // Define the path to your index.html file relative to the Jenkins workspace
                     def indexFile = 'index.html'
                     
                     // Ensure the file is available in the workspace
                     sh "ls -l ${indexFile}"
                     
-                    // Skip copying since the file is already in the correct location
-                    echo "index.html is already in the correct location, no need to copy."
-                    
-                    // Optionally, add and commit the file to GitHub (if applicable)
+                    // Only add and commit if there are changes to the file
                     sh '''
                     git add index.html
-                    git commit -m "Add index.html to deployment folder"
-                    git push origin main
+                    if git diff-index --quiet HEAD --; then
+                      echo "No changes to commit"
+                    else
+                      git commit -m "Add index.html to deployment folder"
+                      git push origin main
+                    fi
                     '''
                 }
             }
