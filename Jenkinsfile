@@ -28,9 +28,8 @@ pipeline {
                     // Ensure the file is available in the workspace
                     sh "ls -l ${indexFile}"
                     
-                    // Example deployment command (adjust as needed for your setup)
-                    // Assuming the deployment folder is the same as the current directory
-                    sh "cp ${indexFile} ."
+                    // Skip copying since the file is already in the correct location
+                    echo "index.html is already in the correct location, no need to copy."
                     
                     // Optionally, add and commit the file to GitHub (if applicable)
                     sh '''
