@@ -29,11 +29,11 @@ pipeline {
                     sh "ls -l ${indexFile}"
                     
                     // Example deployment command (adjust as needed for your setup)
-                    sh "cp ${indexFile} /path/to/your/deployment/folder/"
+                    // Assuming the deployment folder is the same as the current directory
+                    sh "cp ${indexFile} ."
                     
                     // Optionally, add and commit the file to GitHub (if applicable)
                     sh '''
-                    cd /path/to/your/deployment/folder/
                     git add index.html
                     git commit -m "Add index.html to deployment folder"
                     git push origin main
